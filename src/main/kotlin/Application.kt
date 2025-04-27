@@ -6,6 +6,9 @@ import com.dto.token.TokenConfig
 import com.exceptions.configureExceptionHandling
 import com.services.UserAuthService
 import com.utils.JwtConfig
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
@@ -15,6 +18,11 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    val httpClient = HttpClient(CIO) {
+        install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+            json()
+        }
+    }
 
     val jwt = environment.config.config("jwt")
 
@@ -26,18 +34,19 @@ fun Application.module() {
     )
     JwtConfig.init(environment.config)
 
-    install(Koin){
+    install(Koin) {
         modules(appModule)
     }
 
     val userAuthService by inject<UserAuthService>()
 
-    configureAuth(tokenConfig)
+    configureAuth(tokenConfig, httpClient)
     configureExceptionHandling()
     configureSerialization()
     configureDatabases()
     configureHTTP()
     configureRouting(
-        userAuthService = userAuthService
+        userAuthService = userAuthService,
+        httpClient = httpClient
     )
 }

@@ -28,7 +28,14 @@ repositories {
 dependencies {
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-content-negotiation")
+
+    implementation("io.ktor:ktor-client-content-negotiation")
+    implementation("io.ktor:ktor-server-cio:3.1.2")
+    implementation("io.ktor:ktor-client-cio:3.1.2")
+
     implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+
     implementation("org.postgresql:postgresql:$postgres_version")
     implementation("com.h2database:h2:$h2_version")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
@@ -46,6 +53,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:6.2.0")
 
     implementation("io.ktor:ktor-server-auth-jwt:3.1.1")
+//    implementation("io.ktor:ktor-auth:3.1.2")
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("io.ktor:ktor-server-status-pages:3.1.1")
 }

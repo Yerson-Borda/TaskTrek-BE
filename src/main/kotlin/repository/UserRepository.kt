@@ -10,6 +10,7 @@ interface UserRepository {
         username: String,
         email: String,
         password: String,
+        isGoogleUser: Boolean = false
     ) : Boolean
     suspend fun findByEmail(email: String): UserEntity?
     suspend fun findById(userId: UUID): UserEntity?
@@ -19,7 +20,8 @@ class UserRepositoryImpl : UserRepository {
     override suspend fun createUser(
         username: String,
         email: String,
-        password: String
+        password: String,
+        isGoogleUser: Boolean
     ): Boolean {
         try {
             transaction {
