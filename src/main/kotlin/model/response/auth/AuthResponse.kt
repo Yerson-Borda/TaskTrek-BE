@@ -1,4 +1,4 @@
-package com.dto.response.auth
+package com.model.response.auth
 
 import kotlinx.serialization.Serializable
 

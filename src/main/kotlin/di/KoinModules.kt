@@ -1,6 +1,6 @@
 package com.di
 
-import com.utils.JwtConfig
+import com.config.JwtConfig
 import com.repository.UserRepository
 import com.repository.UserRepositoryImpl
 import com.services.UserAuthService
@@ -13,7 +13,8 @@ val appModule = module {
     single { PasswordUtils() }
     single { JwtConfig() }
 
-    single<UserRepository> { UserRepositoryImpl() }
+//    single<Token> { TokenConfigProvider.provideTokenConfig(get<ApplicationConfig>()) }
 
+    single<UserRepository> { UserRepositoryImpl() }
     single<UserAuthService> { UserAuthServiceImpl(get(), get(), get()) }
 }

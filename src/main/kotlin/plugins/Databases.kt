@@ -1,6 +1,6 @@
-package com
+package com.plugins
 
-import com.configuration.DatabaseFactory
+import com.config.DatabaseFactory
 import io.ktor.server.application.*
 
 fun Application.configureDatabases() {

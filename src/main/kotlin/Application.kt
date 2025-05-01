@@ -1,11 +1,14 @@
 package com
 
-import com.configuration.configureAuth
+import com.config.TokenConfigProvider
+import com.config.configureAuth
 import com.di.appModule
-import com.dto.token.TokenConfig
 import com.exceptions.configureExceptionHandling
+import com.plugins.configureDatabases
+import com.plugins.configureHTTP
+import com.plugins.configureRouting
+import com.plugins.configureSerialization
 import com.services.UserAuthService
-import com.utils.JwtConfig
 import io.ktor.server.application.*
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
@@ -15,18 +18,10 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    val tokenConfig = TokenConfigProvider.provideTokenConfig(environment.config)
+    TokenConfigProvider.initJwtConfig(environment.config)
 
-    val jwt = environment.config.config("jwt")
-
-    val tokenConfig = TokenConfig(
-        issuer = jwt.property("issuer").getString(),
-        audience = jwt.property("audience").getString(),
-        tokenExpiry = jwt.property("expiry").getString().toLong(),
-        secret = jwt.property("secret").getString()
-    )
-    JwtConfig.init(environment.config)
-
-    install(Koin){
+    install(Koin) {
         modules(appModule)
     }
 
@@ -37,7 +32,5 @@ fun Application.module() {
     configureSerialization()
     configureDatabases()
     configureHTTP()
-    configureRouting(
-        userAuthService = userAuthService
-    )
+    configureRouting(userAuthService = userAuthService)
 }

@@ -1,4 +1,4 @@
-package com
+package com.plugins
 
 import com.routes.userAuthRoutes
 import com.services.UserAuthService

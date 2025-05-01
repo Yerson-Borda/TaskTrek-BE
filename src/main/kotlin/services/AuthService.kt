@@ -1,11 +1,11 @@
 package com.services
 
-import com.dto.request.auth.LoginRequest
-import com.dto.request.auth.RegisterRequest
+import com.model.request.auth.LoginRequest
+import com.model.request.auth.RegisterRequest
 import com.repository.UserRepository
 import com.utils.PasswordUtils
 import com.exceptions.AppException
-import com.utils.JwtConfig
+import com.config.JwtConfig
 
 interface UserAuthService {
     suspend fun register(registerRequest: RegisterRequest): Boolean

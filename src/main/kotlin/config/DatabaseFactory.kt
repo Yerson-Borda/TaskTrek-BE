@@ -1,4 +1,4 @@
-package com.configuration
+package com.config
 
 import com.entities.*
 import com.zaxxer.hikari.HikariConfig

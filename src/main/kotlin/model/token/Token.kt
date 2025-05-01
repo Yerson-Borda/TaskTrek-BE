@@ -1,6 +1,6 @@
-package com.dto.token
+package com.model.token
 
-data class TokenConfig(
+data class Token(
     val secret: String,
     val issuer: String,
     val audience: String,

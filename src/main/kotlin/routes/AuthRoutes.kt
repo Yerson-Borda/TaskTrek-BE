@@ -1,8 +1,8 @@
 package com.routes
 
-import com.dto.request.auth.LoginRequest
-import com.dto.request.auth.RegisterRequest
-import com.dto.response.auth.AuthResponse
+import com.model.request.auth.LoginRequest
+import com.model.request.auth.RegisterRequest
+import com.model.response.auth.AuthResponse
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*

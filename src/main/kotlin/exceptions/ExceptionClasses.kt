@@ -11,8 +11,6 @@ open class AppException(
 ) : RuntimeException(message) {
     //400
     class BadRequestException(message: String) : AppException("BAD_REQUEST" , message)
-    class InvalidCredentialsException : AppException("INVALID_CREDENTIALS" , "Invalid email or password")
-
     //401
     class UnauthorizedException(message: String) : AppException("UNAUTHORIZED" , message)
     //403
