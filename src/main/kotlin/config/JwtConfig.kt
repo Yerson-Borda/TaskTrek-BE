@@ -26,7 +26,7 @@ class JwtConfig() {
 
     fun getVerifier() : JWTVerifier {
         return JWT.require(Algorithm.HMAC256(getSecret()))
-            .withIssuer()
+            .withIssuer(getIssuer())
             .withAudience(getAudience())
             .build()
     }
