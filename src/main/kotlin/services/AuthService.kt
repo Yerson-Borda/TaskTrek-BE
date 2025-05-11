@@ -32,9 +32,11 @@ class UserAuthServiceImpl(
     override suspend fun login(loginRequest: LoginRequest): String {
         val user = userRepository.findByEmail(loginRequest.email)
             ?: throw AppException.UnauthorizedException("Invalid Credentials")
-        if(!passwordUtil.verify(password = loginRequest.password , hash = user.password)) {
+
+        if (!passwordUtil.verify(password = loginRequest.password, hash = user.password)) {
             throw AppException.UnauthorizedException("Invalid Credentials")
         }
-        return jwtConfig.generateToken(user.username)
+
+        return jwtConfig.generateToken(user.id.value)
     }
 }

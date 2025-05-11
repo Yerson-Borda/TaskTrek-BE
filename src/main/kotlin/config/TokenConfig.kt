@@ -13,8 +13,4 @@ object TokenConfigProvider {
             secret = jwt.property("secret").getString()
         )
     }
-
-    fun initJwtConfig(config: ApplicationConfig) {
-        JwtConfig.init(config)
-    }
 }

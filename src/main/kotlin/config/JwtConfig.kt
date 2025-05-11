@@ -3,47 +3,25 @@ package com.config
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import io.ktor.server.config.ApplicationConfig
+import com.model.token.Token
 import java.util.Date
+import java.util.UUID
 
-class JwtConfig() {
+class JwtConfig(private val token: Token) {
 
-    companion object {
-        lateinit var config : ApplicationConfig
-        fun init(config : ApplicationConfig) {
-            this.config = config
-        }
-    }
-
-    fun generateToken(username: String) : String {
+    fun generateToken(userId: UUID): String {
         return JWT.create()
-            .withIssuer(getIssuer())
-            .withAudience(getAudience())
-            .withClaim("username" , username)
-            .withExpiresAt(Date(getExpiration()))
-            .sign(Algorithm.HMAC256(getSecret()))
+            .withIssuer(token.issuer)
+            .withAudience(token.audience)
+            .withClaim("userId", userId.toString())
+            .withExpiresAt(Date(System.currentTimeMillis() + token.tokenExpiry))
+            .sign(Algorithm.HMAC256(token.secret))
     }
 
-    fun getVerifier() : JWTVerifier {
-        return JWT.require(Algorithm.HMAC256(getSecret()))
-            .withIssuer(getIssuer())
-            .withAudience(getAudience())
+    fun getVerifier(): JWTVerifier {
+        return JWT.require(Algorithm.HMAC256(token.secret))
+            .withIssuer(token.issuer)
+            .withAudience(token.audience)
             .build()
-    }
-
-    fun getIssuer() : String {
-        return config.property("jwt.issuer").getString()
-    }
-
-    private fun getAudience(): String{
-        return config.property("jwt.audience").getString()
-    }
-
-    private fun getSecret(): String {
-        return config.property("jwt.secret").getString()
-    }
-
-    private fun getExpiration(): Long {
-        return config.property("jwt.expiration").getString().toLong()
     }
 }
