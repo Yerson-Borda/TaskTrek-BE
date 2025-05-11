@@ -10,7 +10,7 @@ object Users : UUIDTable("users") {
     val username = varchar("username", 12)
     val email = varchar("email", 100).uniqueIndex()
     val password = varchar("password", 64)
-    val profileImage = varchar("profile_image", 64).nullable()
+    val profileImage = varchar("profile_image", 255).nullable()
 }
 
 class UserEntity(id : EntityID<UUID>) : UUIDEntity(id) {
