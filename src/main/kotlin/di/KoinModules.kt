@@ -7,6 +7,8 @@ import com.repository.ProfileImageRepository
 import com.repository.ProfileImageRepositoryImpl
 import com.repository.ProfileRepository
 import com.repository.ProfileRepositoryImpl
+import com.repository.TokenBlacklistRepository
+import com.repository.TokenBlacklistRepositoryImpl
 import com.repository.UserRepository
 import com.repository.UserRepositoryImpl
 import com.services.ProfileImageService
@@ -27,10 +29,11 @@ fun appModule(config: ApplicationConfig) = module {
 
     single { JwtConfig(get<Token>()) }
 
+    single<TokenBlacklistRepository> { TokenBlacklistRepositoryImpl() }
     single<ProfileImageRepository> { ProfileImageRepositoryImpl() }
     single<ProfileImageService> { ProfileImageServiceImpl(get()) }
     single<ProfileRepository> { ProfileRepositoryImpl() }
     single<UserProfileService> { UserProfileServiceImpl(get(), get()) }
     single<UserRepository> { UserRepositoryImpl() }
-    single<UserAuthService> { UserAuthServiceImpl(get(), get(), get()) }
+    single<UserAuthService> { UserAuthServiceImpl(get(), get(), get(), get()) }
 }

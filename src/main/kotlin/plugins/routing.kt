@@ -13,7 +13,7 @@ import io.ktor.server.routing.routing
 fun Application.configureRouting(
     userAuthService: UserAuthService,
     profileService: UserProfileService,
-    profileImageService: ProfileImageService
+    profileImageService: ProfileImageService,
 ) {
     routing {
 

@@ -71,11 +71,13 @@ fun Route.profileRoutes(
                     } else {
                         throw AppException.BadRequestException("No valid image found")
                     }
-                } catch (e: Exception) {
-                    throw AppException.InternalServerError()
+                } catch (e: AppException.InternalServerError) {
+                    call.respond(
+                        status = HttpStatusCode.InternalServerError,
+                        message = mapOf("code" to e.code, "message" to e.message)
+                    )
                 }
             }
-
         }
     }
 }

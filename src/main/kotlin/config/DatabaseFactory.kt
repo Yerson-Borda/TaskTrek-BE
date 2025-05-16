@@ -26,11 +26,12 @@ object DatabaseFactory {
 
         val dataSource = HikariDataSource(config)
 
-        val database = Database.connect(datasource = dataSource)
+        Database.connect(datasource = dataSource)
 
         transaction {
             SchemaUtils.createMissingTablesAndColumns(
-                Users
+                Users,
+                BlacklistedTokens
             )
         }
     }

@@ -9,6 +9,9 @@ import io.ktor.server.routing.*
 import com.services.UserAuthService
 import io.ktor.http.HttpStatusCode
 import com.exceptions.AppException
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
 
 fun Route.userAuthRoutes(
     authService: UserAuthService
@@ -26,6 +29,7 @@ fun Route.userAuthRoutes(
                 throw AppException.InternalServerError()
             }
         }
+
         post("/login") {
             val credentials = call.receive<LoginRequest>()
             try {
@@ -41,8 +45,37 @@ fun Route.userAuthRoutes(
                     status = HttpStatusCode.Unauthorized,
                     message = mapOf("code" to e.code, "message" to e.message)
                 )
-            }catch (e: Exception) {
-                call.respond(HttpStatusCode.InternalServerError, mapOf("code" to "INTERNAL_ERROR", "message" to "An unexpected error occurred"))
+            }catch (e: AppException.InternalServerError) {
+                call.respond(
+                    status = HttpStatusCode.InternalServerError,
+                    message = mapOf("code" to e.code, "message" to e.message)
+                )
+            }
+        }
+
+        authenticate("auth_jwt") {
+            post("/logout") {
+                val principal = call.principal<JWTPrincipal>()!!
+                val token = call.request.headers["Authorization"]
+                    ?.removePrefix("Bearer ")
+                    ?.trim()
+                    ?: return@post call.respond(
+                        status = HttpStatusCode.BadRequest,
+                        message = "Missing token"
+                    )
+
+                try {
+                    authService.logout(token, principal)
+                    call.respond(
+                        status = HttpStatusCode.OK,
+                        message = mapOf("message" to "Logged out successfully")
+                    )
+                } catch (e: AppException.InternalServerError) {
+                    call.respond(
+                        status = HttpStatusCode.InternalServerError,
+                        message = mapOf("code" to e.code, "message" to e.message)
+                    )
+                }
             }
         }
     }
