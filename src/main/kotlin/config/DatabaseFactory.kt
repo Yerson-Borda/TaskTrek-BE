@@ -31,7 +31,9 @@ object DatabaseFactory {
         transaction {
             SchemaUtils.createMissingTablesAndColumns(
                 Users,
-                BlacklistedTokens
+                BlacklistedTokens,
+                Tasks,
+                TaskAttachments
             )
         }
     }

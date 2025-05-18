@@ -7,12 +7,16 @@ import com.repository.ProfileImageRepository
 import com.repository.ProfileImageRepositoryImpl
 import com.repository.ProfileRepository
 import com.repository.ProfileRepositoryImpl
+import com.repository.TaskRepository
+import com.repository.TaskRepositoryImpl
 import com.repository.TokenBlacklistRepository
 import com.repository.TokenBlacklistRepositoryImpl
 import com.repository.UserRepository
 import com.repository.UserRepositoryImpl
 import com.services.ProfileImageService
 import com.services.ProfileImageServiceImpl
+import com.services.TaskService
+import com.services.TaskServiceImpl
 import com.services.UserAuthService
 import com.services.UserAuthServiceImpl
 import com.services.UserProfileService
@@ -36,4 +40,6 @@ fun appModule(config: ApplicationConfig) = module {
     single<UserProfileService> { UserProfileServiceImpl(get(), get()) }
     single<UserRepository> { UserRepositoryImpl() }
     single<UserAuthService> { UserAuthServiceImpl(get(), get(), get(), get()) }
+    single<TaskRepository> { TaskRepositoryImpl() }
+    single<TaskService> { TaskServiceImpl(get()) }
 }

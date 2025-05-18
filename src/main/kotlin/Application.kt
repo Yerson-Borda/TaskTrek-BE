@@ -11,6 +11,7 @@ import com.plugins.configureRouting
 import com.plugins.configureSerialization
 import com.repository.TokenBlacklistRepository
 import com.services.ProfileImageService
+import com.services.TaskService
 import com.services.UserAuthService
 import com.services.UserProfileService
 import com.utils.scheduleTokenCleanup
@@ -34,6 +35,7 @@ fun Application.module() {
     val profileImageService by inject<ProfileImageService>()
     val tokenBlacklistRepo by inject<TokenBlacklistRepository>()
     val tokenConfig by inject<Token>()
+    val taskService by inject<TaskService>()
 
     configureAuth(tokenConfig)
     installTokenBlacklistCheck(tokenBlacklistRepo)
@@ -46,6 +48,7 @@ fun Application.module() {
     configureRouting(
         userAuthService = userAuthService,
         profileService = userProfileService,
-        profileImageService = profileImageService
+        profileImageService = profileImageService,
+        taskService = taskService
     )
 }

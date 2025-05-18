@@ -1,8 +1,10 @@
 package com.plugins
 
 import com.routes.profileRoutes
+import com.routes.taskRoutes
 import com.routes.userAuthRoutes
 import com.services.ProfileImageService
+import com.services.TaskService
 import com.services.UserAuthService
 import com.services.UserProfileService
 import io.ktor.server.application.Application
@@ -14,6 +16,7 @@ fun Application.configureRouting(
     userAuthService: UserAuthService,
     profileService: UserProfileService,
     profileImageService: ProfileImageService,
+    taskService: TaskService
 ) {
     routing {
 
@@ -23,5 +26,6 @@ fun Application.configureRouting(
 
         userAuthRoutes(userAuthService)
         profileRoutes(profileService, profileImageService)
+        taskRoutes(taskService)
     }
 }
