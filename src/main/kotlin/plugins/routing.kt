@@ -1,9 +1,11 @@
 package com.plugins
 
 import com.routes.profileRoutes
+import com.routes.projectRoutes
 import com.routes.taskRoutes
 import com.routes.userAuthRoutes
 import com.services.ProfileImageService
+import com.services.ProjectService
 import com.services.TaskService
 import com.services.UserAuthService
 import com.services.UserProfileService
@@ -16,7 +18,8 @@ fun Application.configureRouting(
     userAuthService: UserAuthService,
     profileService: UserProfileService,
     profileImageService: ProfileImageService,
-    taskService: TaskService
+    taskService: TaskService,
+    projectService: ProjectService
 ) {
     routing {
 
@@ -27,5 +30,6 @@ fun Application.configureRouting(
         userAuthRoutes(userAuthService)
         profileRoutes(profileService, profileImageService)
         taskRoutes(taskService)
+        projectRoutes(projectService, taskService)
     }
 }

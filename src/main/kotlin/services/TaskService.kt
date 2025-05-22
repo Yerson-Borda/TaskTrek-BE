@@ -16,6 +16,7 @@ interface TaskService {
     suspend fun update(userId: UUID, taskId: UUID, request: UpdateTaskRequest): Boolean
     suspend fun delete(userId: UUID, taskId: UUID): Boolean
     suspend fun completePomodoro(taskId: UUID): Boolean
+    suspend fun markComplete(userId: UUID, taskId: UUID): Boolean
 }
 
 class TaskServiceImpl(
@@ -40,4 +41,5 @@ class TaskServiceImpl(
     override suspend fun update(userId: UUID, taskId: UUID, request: UpdateTaskRequest): Boolean = repo.updateTask(userId, taskId, request)
     override suspend fun delete(userId: UUID, taskId: UUID): Boolean = repo.deleteTask(userId, taskId)
     override suspend fun completePomodoro(taskId: UUID): Boolean = repo.incrementPomodoro(taskId)
+    override suspend fun markComplete(userId: UUID, taskId: UUID): Boolean = repo.markComplete(userId, taskId)
 }

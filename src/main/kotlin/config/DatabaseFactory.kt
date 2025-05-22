@@ -33,7 +33,9 @@ object DatabaseFactory {
                 Users,
                 BlacklistedTokens,
                 Tasks,
-                TaskAttachments
+                TaskAttachments,
+                Projects,
+                ProjectMembers
             )
         }
     }

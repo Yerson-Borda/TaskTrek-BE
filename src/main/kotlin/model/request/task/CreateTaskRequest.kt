@@ -5,6 +5,8 @@ import com.model.enums.TaskTag
 import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 import com.utils.LocalDateTimeSerializer
+import com.utils.UUIDSerializer
+import java.util.UUID
 
 @Serializable
 data class CreateTaskRequest(
@@ -24,5 +26,8 @@ data class CreateTaskRequest(
     @Serializable(with = LocalDateTimeSerializer::class)
     val reminder: LocalDateTime? = null,
 
-    val note: String? = null
+    val note: String? = null,
+
+    @Serializable(with = UUIDSerializer::class)
+    val projectId: UUID? = null
 )

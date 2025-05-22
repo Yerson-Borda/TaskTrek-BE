@@ -19,4 +19,7 @@ class UserEntity(id : EntityID<UUID>) : UUIDEntity(id) {
     var email by Users.email
     var password by Users.password
     var profileImage by Users.profileImage
+
+    val ownedProjects by ProjectEntity referrersOn Projects.owner
+    val memberProjects by ProjectEntity via ProjectMembers
 }

@@ -88,6 +88,18 @@ fun Route.taskRoutes(taskService: TaskService) {
                 if (taskService.completePomodoro(id)) call.respond(HttpStatusCode.OK)
                 else call.respond(HttpStatusCode.BadRequest)
             }
+
+            post("/{id}/complete") {
+                val principal = call.principal<JWTPrincipal>()!!
+                val userId = UUID.fromString(principal.payload.getClaim("userId").asString())
+                val id = UUID.fromString(call.parameters["id"]!!)
+
+                if (taskService.markComplete(userId, id)) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    call.respond(HttpStatusCode.NotFound)
+                }
+            }
         }
     }
 }

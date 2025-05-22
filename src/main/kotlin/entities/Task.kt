@@ -22,12 +22,14 @@ object Tasks : UUIDTable("tasks") {
     val repeat = enumerationByName("repeat", 20, RepeatInterval::class).nullable()
     val note = text("note").nullable()
     val complete = bool("complete").default(false)
+    val project = reference("project_id", Projects).nullable()
 }
 
 class TaskEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<TaskEntity>(Tasks)
 
     var user by UserEntity referencedOn Tasks.user
+    var project by ProjectEntity optionalReferencedOn Tasks.project
     var tag by Tasks.tag
     var title by Tasks.title
     var description by Tasks.description
